@@ -31,5 +31,12 @@ go.work.sum
 # .idea/
 # .vscode/
 
+# Installed tools directory (managed by tools package)
+hack/bin/
+
+# Custom golangci-lint build output
+bin/
+
 # redacted information
 .private
+junit.xml

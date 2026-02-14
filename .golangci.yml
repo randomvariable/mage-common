@@ -22,11 +22,6 @@ formatters:
     - gofumpt
     - goimports
     - golines
-  exclusions:
-    generated: strict
-    paths:
-      - zz_generated.*\.go$
-      - vendor/*
   settings:
     gci:
       custom-order: true
@@ -39,7 +34,7 @@ formatters:
       max-len: 180
 issues:
   max-same-issues: 0
-  fix: true
+  fix: false
 linters:
   disable:
     - depguard
@@ -47,6 +42,7 @@ linters:
     - gochecknoglobals
     - gochecknoinits
     - lll
+    - noinlineerr
     - nonamedreturns
     - tagliatelle
     - testpackage
@@ -59,11 +55,7 @@ linters:
     warn-unused: true
     paths:
       - zz_generated.*\.go$
-      - .*_mock\.go
     rules:
-      - text: parameter '(resp|req|ctx)' seems to be unused
-        linters:
-          - revive
       - text: "unknown option \"(inline|omitzero)\""
         linters:
           - revive
@@ -78,7 +70,32 @@ linters:
           - gosec
           - noctx
           - mnd
+      - path-except: api/tools/
+        linters:
+          - kubeapilinter
   settings:
+    custom:
+      kubeapilinter:
+        type: module
+        description: Kubernetes API Linter for API types
+        settings:
+          linters:
+            enable:
+              - jsontags
+              - optionalorrequired
+              - optionalfields
+              - requiredfields
+              - commentstart
+              - nofloats
+              - integers
+            disable:
+              - nobools
+              - ssatags
+              - statusoptional
+              - statussubresource
+          lintersConfig:
+            jsontags:
+              jsonTagRegex: "^[a-z][a-zA-Z0-9]*$"
     goheader:
       template: |-
         Copyright 2026 Naadir Jeewa

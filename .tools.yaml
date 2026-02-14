@@ -1,0 +1,113 @@
+apiVersion: mage-common.randomvariable.co.uk/v1alpha1
+kind: ToolConfiguration
+spec:
+  toolsDir: hack/bin
+  tools:
+    # golangci-lint: installs via "go install" and builds a custom binary
+    # if .custom-gcl.yml is present.
+    - name: golangci-lint
+      version: v2.9.0
+      sources:
+        - type: golangci-lint
+          url: github.com/golangci/golangci-lint/v2/cmd/golangci-lint
+
+    # go (remote): installs via "go install <url>@<version>".
+    - name: controller-gen
+      version: v0.18.0
+      sources:
+        - type: go
+          url: sigs.k8s.io/controller-tools/cmd/controller-gen
+
+    - name: defaulter-gen
+      version: v0.32.0
+      sources:
+        - type: go
+          url: k8s.io/code-generator/cmd/defaulter-gen
+
+
+
+    # gem: installs via "bundle binstubs <package>" with GEM_VERSION pinned.
+    - name: mdl
+      version: 0.13.0
+      sources:
+        - type: gem
+          package: mdl
+
+    # npx: creates a shell shim that delegates to "npx <package>@<version>".
+    - name: markdownlint-cli2
+      version: v0.17.2
+      sources:
+        - type: npx
+          package: markdownlint-cli2
+
+    # cargo: installs via "cargo install <package> --version <version>".
+    - name: typos
+      version: v1.32.0
+      sources:
+        - type: cargo
+          package: typos-cli
+
+    # uvx: creates a shell shim that delegates to "uvx <package>==<version>".
+    - name: yamllint
+      version: 1.37.1
+      sources:
+        - type: uvx
+          package: yamllint
+
+    # download: fetches a binary or archive via HTTP. Supports Go template
+    # tags ({{.Version}}, {{.OS}}, {{.Arch}}, etc.), osMap/archMap for
+    # platform name translation, binaryPath for archives, and checksum
+    # verification (inline or URL-based).
+    - name: kubectl
+      version: v1.33.1
+      sources:
+        - type: download
+          url: "https://dl.k8s.io/release/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl"
+          checksum:
+            url: "https://dl.k8s.io/release/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256"
+
+    # download with archive extraction, osMap, archMap, and binaryPath.
+    - name: kustomize
+      version: v5.6.0
+      tagPrefix: "kustomize/"
+      sources:
+        - type: download
+          url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F{{.Version}}/kustomize_{{.Version}}_{{.OS}}_{{.Arch}}.tar.gz"
+          binaryPath: kustomize
+          checksum:
+            url: "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F{{.Version}}/checksums.txt"
+          archMap:
+            amd64: amd64
+            arm64: arm64
+
+    # go (remote): test runner with JUnit output.
+    - name: gotestsum
+      version: v1.13.0
+      sources:
+        - type: go
+          url: gotest.tools/gotestsum
+
+    # go (remote): test coverage threshold checker.
+    - name: go-test-coverage
+      version: v2.15.0
+      sources:
+        - type: go
+          url: github.com/vladopajic/go-test-coverage/v2
+
+    # download: security vulnerability scanner.
+    - name: osv-scanner
+      version: v2.3.3
+      sources:
+        - type: download
+          url: "https://github.com/google/osv-scanner/releases/download/{{.Version}}/osv-scanner_{{.OS}}_{{.Arch}}"
+          checksum:
+            url: "https://github.com/google/osv-scanner/releases/download/{{.Version}}/osv-scanner_SHA256SUMS"
+
+    # Fallback example: sources are tried in order until one succeeds.
+    # This lets you prefer a fast download but fall back to building from
+    # source when a pre-built binary is unavailable for the platform.
+    - name: conversion-gen
+      version: v0.32.0
+      sources:
+        - type: go
+          url: k8s.io/code-generator/cmd/conversion-gen
