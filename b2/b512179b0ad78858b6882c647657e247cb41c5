@@ -1,0 +1,125 @@
+.github/workflows/ci.yml
+  8bd02b6795edc1b6 38-39,41-42,45-46,49,110-119,121-122,124-125
+.custom-gcl.yml
+  8bd02b6795edc1b6 19,24
+  b0e24467bb2fee43 1-18,20,22-23
+.gitignore
+  8bd02b6795edc1b6 34-41
+magefile.go
+  8bd02b6795edc1b6 1-208
+tools/targets/targets.go
+  8bd02b6795edc1b6 1-159
+.tools.yaml
+  b0e24467bb2fee43 1-5,8,10,12,15-19,21-25
+  8bd02b6795edc1b6 6-7,9,11,13-14,20,26,28-113
+.golangci.yml
+  b0e24467bb2fee43 65-66,69,71-74,76-77,79-91,94-108,111-115
+  8bd02b6795edc1b6 32,37,67,70,75,78,92-93,109-110
+specs/002-tool-install/checklists/api.md
+  2357d8e149c42272 13-22,26-31,35-43,47-49,53-58,62-65,69-72,76-80
+  ed34777441f9fe62 1-12,23-25,32-34,44-46,50-52,59-61,66-68,73-75,81-89
+specs/002-tool-install/checklists/requirements.md
+  ed34777441f9fe62 1-39
+specs/002-tool-install/checklists/security.md
+  2357d8e149c42272 13-21,25-31,35-41,45-49,53-57,61-63,67-69,75
+  ed34777441f9fe62 1-12,22-24,32-34,42-44,50-52,58-60,64-66,70-74,76-77
+specs/002-tool-install/research.md
+  ed34777441f9fe62 1-148
+specs/002-tool-install/contracts/tools.go
+  ed34777441f9fe62 1-73,76,78-158,161,163-198,200,202-212
+  c70a85e07fc5c0ef 199,201,213-216
+specs/002-tool-install/tasks.md
+  8bd02b6795edc1b6 78-87,91-94,98-99,111-113,125-126,138-140,152-158,170-172,182-186
+  ed34777441f9fe62 1-21,27-37,46-48,60-62,65-77,88-90,95-97,100-110,114-124,127-137,141-151,159-169,173-181,187-315
+  b0e24467bb2fee43 22-26,38-45,49-59,63-64
+tools/README.md
+  8bd02b6795edc1b6 1-330
+specs/002-tool-install/plan.md
+  ed34777441f9fe62 1,3-4,8,12-23,29-40,47,49-52,60-112,115,121
+specs/002-tool-install/spec.md
+  ed34777441f9fe62 1,3-4,6,10,12,14,16,18-32,36-37,41,43,45,47,51-53,57,59,61,63,67-68,72-125,127,129,131,133,135-136,138,140,142-165,167-184,186,188-220,222-227,229-240,248-270,283-289
+  c70a85e07fc5c0ef 221,228
+  2357d8e149c42272 241-247,271-277
+.specify/memory/constitution.md
+  8bd02b6795edc1b6 3-4,6,180-252
+  c70a85e07fc5c0ef 8-10,42-51
+specs/002-tool-install/quickstart.md
+  ed34777441f9fe62 1-119
+specs/002-tool-install/data-model.md
+  ed34777441f9fe62 1-52,54-189
+  2357d8e149c42272 53
+README.md
+  8bd02b6795edc1b6 11,13-39,41-60,63-68,70-71,78-79,81-87,90,95-98,102-103,110-111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "b2b512179b0ad78858b6882c647657e247cb41c5",
+  "prompts": {
+    "2357d8e149c42272": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8945691a-a98d-4cdc-8602-efc19cef9436",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 102,
+      "overriden_lines": 0
+    },
+    "8bd02b6795edc1b6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fd8d7626-0962-4cde-9691-b324146a7934",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 5,
+      "accepted_lines": 1021,
+      "overriden_lines": 0
+    },
+    "b0e24467bb2fee43": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c49f7b-fa76-4166-89bd-e16fb1243dd6",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 107,
+      "overriden_lines": 0
+    },
+    "c70a85e07fc5c0ef": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a349dc6d-11fe-49c2-b5cc-d3b7e2f26e0b",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 21,
+      "overriden_lines": 0
+    },
+    "ed34777441f9fe62": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e093fdc4-ac06-4914-999b-9e4b439b452d",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 1339,
+      "overriden_lines": 0
+    }
+  }
+}
