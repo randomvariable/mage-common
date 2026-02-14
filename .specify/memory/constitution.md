@@ -1,17 +1,13 @@
 <!--
 Sync Impact Report:
-- Version: 1.0.0 → 1.1.0
-- Version Bump Rationale: MINOR - Added new Linting Policy principle and enhanced existing principles with specific code quality standards from feature spec
+- Version: 1.3.0 → 1.4.0
+- Version Bump Rationale: MINOR - Added Principle X for named arguments in Mage targets
 - Modified Principles:
-  * IV. Production-Grade Error Handling → Enhanced with static sentinel error requirements
-  * VI. Test-Driven Development → Enhanced with specific test patterns (t.Parallel(), t.Helper(), table-driven)
-  * VII. Documentation Standards → Enhanced with specific godoc conventions
-- Added Principles:
-  * VIII. Code Quality Standards (from spec: linting policy, complexity limits, modern idioms)
+  * X. Named Arguments for Mage Targets → New principle requiring config-driven named arguments for all Mage target parameters
 - Templates Status:
-  ✅ plan-template.md: aligned with constitution check requirements
-  ✅ spec-template.md: aligned with user story priorities and testing
-  ✅ tasks-template.md: aligned with library development workflow
+  ✅ plan-template.md: no impact
+  ✅ spec-template.md: no impact
+  ✅ tasks-template.md: no impact
 - Follow-up: None - all changes synchronized
 -->
 
@@ -47,12 +43,12 @@ Configuration loading MUST use Viper with standardized patterns:
 
 Tool installation and versioning MUST be declarative and reproducible:
 
-- Tools MUST be defined in config with: `name`, `version`, `installType`, `url`
-- Supported install types: `go` (go install), `download` (manual/future)
-- Tools MUST be installed to `hack/bin/{GOOS}/{GOARCH}/` with version suffixes
-- Tool binaries MUST be symlinked for unversioned access
-- `EnsureTools()` MUST be idempotent (skip already-installed versions)
-- Tool path prepending MUST be available via `PrependToolsToPath()`
+- Tools MUST be defined in a `.tools.yaml` config with: `name`, `version`, and one or more `sources` (priority-ordered)
+- Each source specifies a `type` and type-specific fields (URL, package name, local path, etc.)
+- Supported install types: `go` (go install), `gem` (Bundler binstubs), `npx` (pinned npx), `cargo` (cargo install), `uvx` (uv package manager), `download` (HTTP with checksum verification)
+- Tools MUST be installed to a configurable tools directory (default `hack/bin/{GOOS}/{GOARCH}/`) with install-type-appropriate versioning (symlinks for go/cargo, binstubs for gem, shims for npx/uvx)
+- `InstallAll()` MUST be idempotent (skip already-installed versions)
+- Tool path prepending MUST be available via `PrependToPath()`
 
 **Rationale**: Version-pinned tools prevent "works on my machine" issues and enable reproducible builds across environments.
 
@@ -185,10 +181,72 @@ This constitution supersedes all other development practices. Changes to this co
 
 All feature work and code reviews MUST verify compliance with these principles. Exceptions require explicit justification in PR descriptions.
 
+### IX. Verbose Build Output
+
+Mage targets and tool execution MUST produce verbose, copy-pasteable output:
+
+- The command runner MUST print the effective working directory
+- The command runner MUST print the full absolute path to the executable
+- The command runner MUST print all arguments
+- The command runner MUST print only **added** environment variables (not inherited process env)
+- Secret values in arguments and environment variables MUST be redacted
+- Output MUST be formatted as a single copy-pasteable shell command (e.g., `cd /path && VAR=val /abs/path/to/binary arg1 arg2`)
+
+**Rationale**: Verbose output enables fast debugging by allowing developers to copy-paste the exact command into a terminal to reproduce issues. Showing only added env vars avoids noise from the inherited process environment.
+
 **Complexity Guideline**: Start simple. Prefer straightforward implementations over premature abstraction. Add complexity only when patterns emerge across multiple use cases.
 
 **Runtime Guidance**: For detailed development practices, see CLAUDE.md in the project root.
 
+### X. Named Arguments for Mage Targets
+
+All Mage targets that accept parameters MUST use named arguments via the config package:
+
+- Parameters MUST be read from Viper (`viper.GetString()`, `viper.GetBool()`, etc.) rather than positional Mage arguments
+- Flag registration MUST use `pflag.String()`/`pflag.Bool()`/etc. on `pflag.CommandLine`
+- Imported target packages MUST register their flags in `init()` (flag registration is a safe init-time operation — no I/O, consistent with Principle V)
+- Consuming magefiles MUST call `pflag.Parse()` followed by `config.CleanOSArgs()` in their own `init()` to strip long flags before Mage processes arguments
+- Target functions MUST call `config.Init()` before reading Viper values (idempotent via `sync.Once`)
+- Sensible defaults MUST be provided at flag registration time
+- Required parameters with no sensible default MUST validate non-empty and return a clear usage error
+- Flag names MUST be domain-specific to avoid environment variable collisions (e.g., `--tool` not `--name`, since Viper's `AutomaticEnv()` maps generic names like `name` to `NAME` which is commonly set in shells)
+
+**Precedence** (highest to lowest):
+1. CLI flags (`--tool=foo`)
+2. Environment variables (`TOOL=foo`)
+3. Configuration file (`config.yaml`)
+4. Default values (from pflag registration)
+
+**Initialization Sequence**:
+```
+init()  → pflag.String("tool", "", "...")      // register flags (domain-specific names)
+init()  → pflag.Parse()                        // parse os.Args
+init()  → config.CleanOSArgs()                 // strip --flags from os.Args for Mage
+target  → config.Init()                        // bind pflags to Viper (lazy, idempotent)
+target  → viper.GetString("tool")              // read value
+```
+
+**Consumer Pattern**:
+```go
+//go:build mage
+
+package main
+
+import (
+    "github.com/spf13/pflag"
+    "github.com/randomvariable/mage-common/config"
+    //mage:import tools
+    _ "github.com/randomvariable/mage-common/tools/targets"
+)
+
+func init() {
+    pflag.Parse()
+    config.CleanOSArgs()
+}
+```
+
+**Rationale**: Named arguments provide a superior UX over positional arguments by supporting config file defaults, environment variable overrides, and self-documenting `--flag` syntax. The pflag → CleanOSArgs → Init → Viper chain integrates cleanly with Mage's argument processing while maintaining the precedence hierarchy defined in Principle II.
+
 ---
 
-**Version**: 1.1.0 | **Ratified**: 2026-02-14 | **Last Amended**: 2026-02-14
+**Version**: 1.4.0 | **Ratified**: 2026-02-14 | **Last Amended**: 2026-02-14
