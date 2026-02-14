@@ -1,0 +1,23 @@
+tools/install_gem_test.go
+  8bd02b6795edc1b6 131,133,137
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "d71ba35a702d7f88693583bca39d5a4b31966f98",
+  "prompts": {
+    "8bd02b6795edc1b6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fd8d7626-0962-4cde-9691-b324146a7934",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 3,
+      "total_deletions": 5,
+      "accepted_lines": 3,
+      "overriden_lines": 0
+    }
+  }
+}
