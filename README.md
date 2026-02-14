@@ -8,6 +8,65 @@ Common utilities and libraries for [Mage](https://magefile.org/) build automatio
 
 ## Packages
 
+### tools
+
+Declarative tool dependency management for Mage projects. Define your tool dependencies in `.tools.yaml` and let the framework handle installation, version tracking, and execution across Go, download, cargo, gem, npx, and uvx source types.
+
+**[Full documentation →](tools/README.md)**
+
+**Quick Example:**
+
+```yaml
+# .tools.yaml
+apiVersion: mage-common.randomvariable.co.uk/v1alpha1
+kind: ToolConfiguration
+spec:
+  toolsDir: hack/bin
+  tools:
+    - name: golangci-lint
+      version: v2.9.0
+      sources:
+        - type: golangci-lint
+          url: github.com/golangci/golangci-lint/v2/cmd/golangci-lint
+
+    - name: kubectl
+      version: v1.33.1
+      sources:
+        - type: download
+          url: "https://dl.k8s.io/release/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl"
+          checksum:
+            url: "https://dl.k8s.io/release/{{.Version}}/bin/{{.OS}}/{{.Arch}}/kubectl.sha256"
+```
+
+```go
+//go:build mage
+
+package main
+
+import (
+    "context"
+
+    "github.com/spf13/pflag"
+
+    "github.com/randomvariable/mage-common/config"
+    //mage:import tools
+    _ "github.com/randomvariable/mage-common/tools/targets"
+
+    magetools "github.com/randomvariable/mage-common/tools"
+)
+
+func init() {
+    pflag.Parse()
+    config.CleanOSArgs()
+}
+
+// Lint runs golangci-lint (auto-installed from .tools.yaml).
+func Lint(ctx context.Context) error {
+    _, err := magetools.Run(ctx, "golangci-lint", []string{"run", "./..."})
+    return err
+}
+```
+
 ### config
 
 Standardized Viper-based configuration loading for Mage projects with support for:
@@ -19,50 +78,23 @@ Standardized Viper-based configuration loading for Mage projects with support fo
 
 **[Full documentation →](config/README.md)**
 
-**Quick Example:**
-
-```go
-//go:build mage
-
-package main
-
-import (
-    "github.com/randomvariable/mage-common/config"
-    "github.com/spf13/pflag"
-    "github.com/spf13/viper"
-)
-
-func init() {
-    pflag.String("image", "", "Container image name")
-    pflag.Parse()
-    config.CleanOSArgs()
-    config.Init()
-}
-
-// Usage: mage build --image=webapp --tag=v1.0
-func Build() error {
-    image := viper.GetString("image")
-    tag := viper.GetString("tag")
-    // ... build logic
-}
-```
-
 ## Installation
 
 ```bash
+go get github.com/randomvariable/mage-common/tools
 go get github.com/randomvariable/mage-common/config
 ```
 
 ## Requirements
 
-- Go 1.23 or later
+- Go 1.25 or later
 - [Mage](https://magefile.org/) (for magefiles)
 
 ## Contributing
 
 Contributions are welcome! Please ensure:
-- All tests pass: `go test ./...`
-- Code is linted: `golangci-lint run`
+- All tests pass: `mage test:run` or `go test ./...`
+- Code is linted: `mage lint:run` or `golangci-lint run`
 - Add tests for new functionality
 
 ## License
