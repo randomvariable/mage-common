@@ -117,14 +117,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.25"
-          cache: true
-
       - name: Install osv-scanner
-        run: go install github.com/google/osv-scanner/v2/cmd/osv-scanner@v2.3.3
+        run: |
+          curl -sSfL -o /usr/local/bin/osv-scanner https://github.com/google/osv-scanner/releases/download/v2.3.3/osv-scanner_linux_amd64
+          chmod +x /usr/local/bin/osv-scanner
 
       - name: Run OSV-Scanner
         run: osv-scanner scan --recursive ./
