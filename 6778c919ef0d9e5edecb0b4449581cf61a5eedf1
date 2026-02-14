@@ -1,0 +1,115 @@
+.specify/templates/plan-template.md
+  82d768c998b9ade0 35
+specs/001-viper-config/plan.md
+  d15f34de51d87277 17-18
+  1b52a4516c4f7540 14-16,20-21,26,32-44,51-52,54-61,68-92,95,99-110,113-167
+specs/001-viper-config/data-model.md
+  d15f34de51d87277 59-61,92,94,188-229,281-282
+  1b52a4516c4f7540 1-58,62-91,93,95-187,230-280,283-346,348-354,356-413,415-429,431-453
+README.md
+  d15f34de51d87277 1-82
+specs/001-viper-config/checklists/requirements.md
+  82d768c998b9ade0 1-56,60-61
+  d15f34de51d87277 57-59
+.specify/memory/constitution.md
+  82d768c998b9ade0 1-2,11-14,16-64,68-69,71,73-92,96-98,100,102-104,106-107,111,113,115,137-193
+  6fbfeb9de71bb5f0 3-10,15,65-67,70,72,93-95,99,101,105,108-110,112,114,116-136,194
+specs/001-viper-config/checklists/api.md
+  1b52a4516c4f7540 19-24,28-31,35-42,46-50,54-58,62-65,69-72,76-79,83-89,93-96,100-103,107-112,116-117,121-124,128-131,135-138,170,184
+  d15f34de51d87277 142-167
+  82d768c998b9ade0 1-18,25-27,32-34,43-45,51-53,59-61,66-68,73-75,80-82,90-92,97-99,104-106,113-115,118-120,125-127,132-134,139-141,168-169,171-183,185-196
+LICENSE
+  d15f34de51d87277 1-201
+specs/001-viper-config/spec.md
+  82d768c998b9ade0 1,3-4,6,8-14,22,24,26,28,32-35,39,41,43,45,49-51,55,57,59,61,65-67,71,73,75,81,83-84,86-88,90,93-97,99,105,107,111-115,118,122-128,130-133,138-142,144-198,204-208,214,216-218,220-222,225-227,229-231
+  1b52a4516c4f7540 77,79-80,91-92,100-103,109-110,117,120,143,199-203,209-210,213,215,219,223-224
+  d15f34de51d87277 116,119,121
+specs/001-viper-config/research.md
+  1b52a4516c4f7540 1-256,258-337,339-617,620-631,633-689,691-759,761,763-768,770-779,781-828,830-871,873-918,920-929,932-935,937-1015,1017-1020,1022-1080,1082-1085,1087-1091,1093-1110,1112-1121,1123-1155
+specs/001-viper-config/quickstart.md
+  1b52a4516c4f7540 1-28,30-54,56-57,59-71,73-133,135-237,239,241,243-288,290-292,294-320,322-342,344-482,484-553
+specs/001-viper-config/contracts/api.md
+  1b52a4516c4f7540 1-103,105-106,108,110-183,219-307,339-340,346-351,353-354,357,363-368,370-372,374-389,391-397,399-520,626-764,766-767,769-772,774-792,794-795,797-817
+  d15f34de51d87277 184-218,308-338,341-345,352,355-356,358-362,369,373,390,398,521-625
+.golangci.yml
+  6ce8deb6c4f601a7 196-199
+specs/001-viper-config/tasks.md
+  d15f34de51d87277 1-363
+specs/001-viper-config/checklists/observability.md
+  1b52a4516c4f7540 1-18,27-29,35-37,45-47,54-56,64-66,72-74,79-81,86-88,93-95,101-103,140-157
+  d15f34de51d87277 19-26,30-34,38-44,48-53,57-63,67-71,75-78,82-85,89-92,96-100,104-139,158-175
+.github/workflows/ci.yml
+  d15f34de51d87277 6-18,21-50,52-58,60-70,72-78,80-87,89-92,95
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "6778c919ef0d9e5edecb0b4449581cf61a5eedf1",
+  "prompts": {
+    "1b52a4516c4f7540": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "9954f161-18ea-43a8-a35b-89542ddb3eb1",
+        "model": "unknown"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 3220,
+      "total_deletions": 237,
+      "accepted_lines": 3024,
+      "overriden_lines": 19
+    },
+    "6ce8deb6c4f601a7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "8115d1f7-38b1-434f-a0a2-c2bf4d0ce91b",
+        "model": "<synthetic>"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 885,
+      "total_deletions": 1036,
+      "accepted_lines": 744,
+      "overriden_lines": 1
+    },
+    "6fbfeb9de71bb5f0": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "3fc10c77-93c8-4acb-b3d8-64cf345e1c60",
+        "model": "unknown"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 47,
+      "total_deletions": 20,
+      "accepted_lines": 47,
+      "overriden_lines": 0
+    },
+    "82d768c998b9ade0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b0da43f5-f8b6-4939-811f-0adbfba9fc82",
+        "model": "claude-sonnet-4-5-20250929"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 605,
+      "total_deletions": 113,
+      "accepted_lines": 445,
+      "overriden_lines": 5
+    },
+    "d15f34de51d87277": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "5f9008c9-025f-4e60-8e86-e4c9986c511e",
+        "model": "unknown"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 4019,
+      "total_deletions": 178,
+      "accepted_lines": 2950,
+      "overriden_lines": 45
+    }
+  }
+}
