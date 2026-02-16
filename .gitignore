@@ -40,3 +40,4 @@ bin/
 # redacted information
 .private
 junit.xml
+.kind-cluster.yaml

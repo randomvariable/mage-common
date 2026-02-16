@@ -67,6 +67,31 @@ func Lint(ctx context.Context) error {
 }
 ```
 
+### kind
+
+Thin wrapper around [sigs.k8s.io/kind](https://sigs.k8s.io/kind) for Mage projects. Place a standard kind v1alpha4 Cluster config in `.kind-cluster.yaml` and use Mage targets to manage the cluster lifecycle. GPU passthrough is supported via a [fork](https://github.com/randomvariable/kind/tree/feature/gpu-passthrough) that adds `CreateWithGPU` to the public API.
+
+The `kind/` directory is its own Go module to isolate the `replace` directive for the fork from the main `go.mod`.
+
+**Quick Example:**
+
+```yaml
+# .kind-cluster.yaml
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+name: dev
+nodes:
+  - role: control-plane
+gpu:
+  type: nvidia
+```
+
+```bash
+mage kind:create    # Create cluster
+mage kind:status    # Check status
+mage kind:delete    # Tear down
+```
+
 ### config
 
 Standardized Viper-based configuration loading for Mage projects with support for:
@@ -82,6 +107,7 @@ Standardized Viper-based configuration loading for Mage projects with support fo
 
 ```bash
 go get github.com/randomvariable/mage-common/tools
+go get github.com/randomvariable/mage-common/kind
 go get github.com/randomvariable/mage-common/config
 ```
 
