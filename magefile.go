@@ -27,10 +27,11 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/randomvariable/mage-common/config"
+	//mage:import kind
+	_ "github.com/randomvariable/mage-common/kind/targets"
+	magetools "github.com/randomvariable/mage-common/tools"
 	//mage:import tools
 	_ "github.com/randomvariable/mage-common/tools/targets"
-
-	magetools "github.com/randomvariable/mage-common/tools"
 )
 
 // init registers named argument flags and initializes pflag/config integration.
