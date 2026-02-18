@@ -40,6 +40,10 @@ type UvxInstaller struct{}
 // Install creates a shim script at <platformToolsDir>/<tool.Name> that
 // invokes uvx with the pinned package version. If the shim already exists
 // and contains the correct version string, the call is a no-op.
+//
+// When tool.Name differs from source.Package, the shim uses
+// "uvx --from <package>==<version> <tool.Name>" so that uvx runs the
+// correct executable from the package.
 func (u *UvxInstaller) Install(_ context.Context, tool v1alpha1.Tool, source *v1alpha1.ToolSource, toolsDir string) error {
 	installed, err := u.IsInstalled(tool, toolsDir)
 	if err != nil {
@@ -56,7 +60,7 @@ func (u *UvxInstaller) Install(_ context.Context, tool v1alpha1.Tool, source *v1
 	}
 
 	shimPath := filepath.Join(platformDir, tool.Name)
-	shimContent := shimScript(ptr.Deref(source.Package, ""), ptr.Deref(tool.Version, ""))
+	shimContent := shimScript(tool.Name, ptr.Deref(source.Package, ""), ptr.Deref(tool.Version, ""))
 
 	err = os.WriteFile(shimPath, []byte(shimContent), shimPerm)
 	if err != nil {
@@ -98,6 +102,13 @@ func (u *UvxInstaller) RuntimeAvailable() error {
 }
 
 // shimScript returns the content of a shell shim that delegates to uvx.
-func shimScript(pkg, version string) string {
-	return "#!/bin/sh\nexec uvx " + pkg + "==" + BareVersion(version) + " \"$@\"\n"
+// When the tool name differs from the package name, it uses --from to
+// specify the package and runs the tool by name.
+func shimScript(toolName, pkg, version string) string {
+	pinned := pkg + "==" + BareVersion(version)
+	if toolName != "" && toolName != pkg {
+		return "#!/bin/sh\nexec uvx --from " + pinned + " " + toolName + " \"$@\"\n"
+	}
+
+	return "#!/bin/sh\nexec uvx " + pinned + " \"$@\"\n"
 }
