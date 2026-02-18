@@ -1,0 +1,36 @@
+README.md
+  63f8a28bd0a4dc81 72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.3",
+  "base_commit_sha": "b62ccd524c3e469e65e7e6b64bcb76adb54e0111",
+  "prompts": {
+    "63f8a28bd0a4dc81": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6d0231a8-cf4a-477d-a921-3f275fe78bad",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 3,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "d15f34de51d87277": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "5f9008c9-025f-4e60-8e86-e4c9986c511e",
+        "model": "unknown"
+      },
+      "human_author": "Naadir Jeewa <naadir@randomvariable.co.uk>",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 0,
+      "accepted_lines": 62,
+      "overriden_lines": 0
+    }
+  }
+}
